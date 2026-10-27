@@ -4,14 +4,17 @@ import java.util.stream.Stream;
 
 class FractalCucumber{
 
-
 }
 
 class PositionOnChessBoard() {
 
 }
 
-
+interface ChessSubscriber { // role = Subscriber
+    public void onMoved() {
+        changePlayer();
+    }
+}
 
 class Cheker {
     private ChessBoard.PlayerColor _playerOwner;
@@ -44,10 +47,22 @@ class Cheker {
         return _owner != null;
     }
 
+    private Collection<ChessSubscriber> _subscribers = new HashSet<>();
+
+    public boolean moveTo(ChessBoardPosition targetPos) {
+        .....;
+        _subscribers.forEach(s -> s.onMoved());
+        return true;
+    }
+
+    public void subscribe(ChessSubscriber a) {
+        _subscribers.add(s);
+    }
+
 }
 
 
-class ChessBoard {
+class ChessBoard implements ChessSubscriber { // role = Concrete Subscriber + client
     public enum PlayerColor {
         BLACK,
         WHITE
@@ -63,6 +78,15 @@ class ChessBoard {
 
     public int getChekerCount ( PlayerColor p ) {
         Stream.of(_chekers).filter(c -> c.getPlayer() == p).count();
+    }
+
+
+    public void onMoved() {
+        changePlayer();
+    }
+
+    private changePlayer() {
+        ....
     }
 }
 
