@@ -91,6 +91,50 @@ class ChessBoard implements ChessSubscriber { // role = Concrete Subscriber + cl
 }
 
 
+// ----------------------------------------------------------------------
+
+
+public void subscribe(ChekerSubscriber subscriber) {}
+
+@Test
+void t1()
+{
+    class Observer implements ChekerSubscriber
+    {
+        private ChessBoard _b;
+        private Cheker _c;
+        PositionOnChessBoard _p;
+        int _eventCount = 0;
+
+        public Observer(ChessBoard b, Cheker c, PositionOnChessBoard p) {
+            _b = b;
+            _c = c;
+            _p = p;
+        }
+
+        public void onMoved() {
+            _eventCount ++;
+            Assert.AreEqual( 1, _eventCount)
+
+            Assert.AreEqual(_p, _c.getPosition());
+            Assert.True(_b.contains(_c));
+        }
+    }
+
+    ChessBoard b;
+
+    Cheker ch = b. ...;
+    var p = new PositionOnChessBoard("d3")
+    ch.subscribe(new Observer(b, ch, p));
+    ch.moveTo(p);
+
+    Assert.AreEqual(p, ch.getPosition());
+    Assert.True(b.contains(ch));
+    Assert.False(ch.isActive());
+    Assert.True(bch.isActive());
+}
+
+
 
 public static void main(String args[]) {
     new ChessBoard();
